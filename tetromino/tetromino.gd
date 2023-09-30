@@ -18,7 +18,7 @@ var wall_kicks
 var data: TetrominoData
 var is_next_piece: bool
 var pieces: Array[Piece] = []
-var other_tetrominos: Array[Tetromino] = []
+var other_tetromino_pieces: Array[Piece] = []
 var ghost_tetromino: GhostTetromino
 
 var cells: Array
@@ -146,12 +146,10 @@ func calculate_global_position(global_starting_position: Vector2, direction: Vec
 
 
 func is_colliding_with_other_tetrominos(global_starting_position: Vector2, direction: Vector2) -> bool:
-	for other_tetromino in other_tetrominos:
-		var other_tetromino_pieces = other_tetromino.get_children().filter(func (c): return c is Piece)
-		for other_piece in other_tetromino_pieces:
-			for piece in pieces:
-				if global_starting_position + piece.position + direction * piece.get_size() == other_tetromino.global_position + other_piece.position:
-					return true
+	for other_piece in other_tetromino_pieces:
+		for piece in pieces:
+			if global_starting_position + piece.position + direction * piece.get_size() == other_piece.global_position:
+				return true
 	return false
 
 
