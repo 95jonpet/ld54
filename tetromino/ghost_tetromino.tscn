@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvjt1w4tnydvy"]
+
+[ext_resource type="Script" path="res://tetromino/ghost_tetromino.gd" id="1_q21v6"]
+
+[node name="GhostTetromino" type="Node2D"]
+modulate = Color(1, 1, 1, 0.498039)
+script = ExtResource("1_q21v6")
