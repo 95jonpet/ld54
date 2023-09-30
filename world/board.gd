@@ -6,8 +6,7 @@ signal game_over()
 signal tetromino_locked(tetromino: Tetromino)
 
 
-const ROWS := 10
-const COLUMNS := 10
+const FULL_LINE_SOUND: AudioStream = preload("res://tetromino/sound_full_line.wav")
 
 @export var tetromino_scene: PackedScene
 var next_tetromino: Tetromino
@@ -36,9 +35,10 @@ func spawn_tetromino(type: Shared.Tetromino, is_next_piece: bool, spawn_position
 
 	tetromino.data = data
 	tetromino.is_next_piece = is_next_piece
+	tetromino.position = spawn_position
 
 	if not is_next_piece:
-		tetromino.position = spawn_position
+		tetromino.position += data.spawn_offset
 		tetromino.other_tetromino_pieces = get_pieces()
 		tetromino.locked.connect(_on_tetromino_locked.bind(tetromino))
 		add_child(tetromino)
@@ -65,7 +65,7 @@ func get_pieces() -> Array[Piece]:
 
 func _check_game_over() -> bool:
 	for piece in get_pieces():
-		if piece.global_position.y == -72:
+		if is_equal_approx(piece.global_position.y, -(Constants.TILE_SIZE * Constants.GRID_SIZE.y / 2.0 - Constants.TILE_SIZE / 2.0)):
 			return true
 	return false
 
@@ -90,9 +90,10 @@ func _add_tetromino_to_lines(tetromino: Tetromino) -> void:
 
 func _remove_full_lines() -> void:
 	for line in get_lines():
-		if line.is_line_full(COLUMNS):
+		if line.is_line_full(Constants.GRID_SIZE.y):
 			_move_lines_down(line.global_position.y)
 			line.free()  # Other logic may depend on the line, so it must be removed synchronously.
+			AudioPlayer.play(FULL_LINE_SOUND)
 
 
 func _move_lines_down(y_position: float) -> void:

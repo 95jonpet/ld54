@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfc6vtqm6742q"]
+[gd_scene load_steps=7 format=3 uid="uid://bfc6vtqm6742q"]
 
 [ext_resource type="Texture2D" uid="uid://co4kdd63fms7x" path="res://grid/grid_tile.png" id="1_0r0qd"]
+[ext_resource type="Script" path="res://world/world.gd" id="1_nat1m"]
 [ext_resource type="Script" path="res://world/piece_spawner.gd" id="2_ny7kb"]
 [ext_resource type="Script" path="res://world/board.gd" id="3_dlyql"]
 [ext_resource type="PackedScene" uid="uid://dmdkmha3onwjw" path="res://tetromino/tetromino.tscn" id="4_hqnyu"]
 [ext_resource type="PackedScene" uid="uid://cxho5xmwrdfj2" path="res://ui/ui.tscn" id="5_thcsl"]
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_nat1m")
 
 [node name="GridTexture" type="TextureRect" parent="."]
 anchors_preset = 8
@@ -14,10 +16,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -80.0
-offset_right = 80.0
-offset_bottom = 80.0
+offset_left = -160.0
+offset_top = -160.0
+offset_right = 160.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_0r0qd")
@@ -33,10 +35,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -46.0
-offset_top = -144.0
-offset_right = 46.0
-offset_bottom = -104.0
+offset_left = 192.0
+offset_top = -20.0
+offset_right = 284.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -48,3 +50,5 @@ text = "NEXT:"
 script = ExtResource("2_ny7kb")
 
 [node name="UI" parent="." instance=ExtResource("5_thcsl")]
+
+[connection signal="game_over" from="Board" to="." method="_on_board_game_over"]

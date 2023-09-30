@@ -5,13 +5,9 @@ extends Node2D
 signal locked()
 
 
-var bounds = {
-	"min_x": -72,
-	"max_x": 72,
-	"min_y": -72,
-	"max_y": 72,
-}
-
+const HARD_DROP_SOUND: AudioStream = preload("res://tetromino/sound_hard_drop.wav")
+const MOVE_SOUND: AudioStream = preload("res://tetromino/sound_move.wav")
+const ROTATE_SOUND: AudioStream = preload("res://tetromino/sound_rotate.wav")
 
 var rotation_index: int = 0
 var wall_kicks
@@ -38,7 +34,6 @@ func _ready() -> void:
 		piece.position = Vector2(cell) * piece.get_size()
 
 	if not is_next_piece:
-		position = data.spawn_position
 		wall_kicks = Shared.wall_kicks_i if data.tetromino_type == Shared.Tetromino.I else Shared.wall_kicks_jlostz
 		ghost_tetromino = ghost_tetromino_scene.instantiate() as GhostTetromino
 		ghost_tetromino.data = data.duplicate()
@@ -53,11 +48,14 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("hard_drop"):
 		hard_drop()
 	elif event.is_action_pressed("move_left"):
-		move(Vector2.LEFT)
+		if move(Vector2.LEFT):
+			AudioPlayer.play(MOVE_SOUND)
 	elif event.is_action_pressed("move_right"):
-		move(Vector2.RIGHT)
+		if move(Vector2.RIGHT):
+			AudioPlayer.play(MOVE_SOUND)
 	elif event.is_action_pressed("move_down"):
-		move(Vector2.DOWN)
+		if move(Vector2.DOWN):
+			AudioPlayer.play(MOVE_SOUND)
 		timer.start()
 	elif event.is_action_pressed("rotate_left"):
 		rotate_tetromino(-1)
@@ -90,19 +88,27 @@ func rotate_tetromino(direction: int) -> void:
 
 	var original_rotation_index = rotation_index
 	_apply_rotation(direction)
+	var rotated := true
 
 	rotation_index = wrapi(rotation_index + sign(direction), 0, 4)
 
 	if not test_wall_kicks(rotation_index, direction):
 		rotation_index = original_rotation_index
 		_apply_rotation(-direction)
+		rotated = false
+
+	if rotated:
+		AudioPlayer.play(ROTATE_SOUND)
 
 	hard_drop_ghost.call_deferred()
 
 
 func hard_drop() -> void:
-	while(move(Vector2.DOWN)):
-		continue
+	var moved := false
+	while move(Vector2.DOWN):
+		moved = true
+	if moved:
+		AudioPlayer.play(HARD_DROP_SOUND)
 	lock()
 
 
@@ -156,7 +162,7 @@ func is_colliding_with_other_tetrominos(global_starting_position: Vector2, direc
 func is_within_game_bounds(global_starting_position: Vector2, direction: Vector2) -> bool:
 	for piece in pieces:
 		var new_position = piece.position + global_starting_position + direction * piece.get_size()
-		if new_position.x < bounds.get("min_x") || new_position.x > bounds.get("max_x") || new_position.y < bounds.get("min_y") || new_position.y > bounds.get("max_y"):
+		if new_position.x < Constants.MIN_X || new_position.x > Constants.MAX_X || new_position.y < Constants.MIN_Y || new_position.y > Constants.MAX_Y:
 			return false
 	return true
 

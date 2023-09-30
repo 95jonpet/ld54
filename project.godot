@@ -15,9 +15,15 @@ run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://config/audio_bus_layout.tres"
+
 [autoload]
 
 Shared="*res://global/shared.gd"
+Constants="*res://global/constants.gd"
+AudioPlayer="*res://global/audio_player.gd"
 
 [display]
 
