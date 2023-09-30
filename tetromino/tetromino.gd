@@ -7,6 +7,7 @@ signal locked()
 
 const HARD_DROP_SOUND: AudioStream = preload("res://tetromino/sound_hard_drop.wav")
 const MOVE_SOUND: AudioStream = preload("res://tetromino/sound_move.wav")
+const MOVE_AUTO_SOUND: AudioStream = preload("res://tetromino/sound_move_auto.wav")
 const ROTATE_SOUND: AudioStream = preload("res://tetromino/sound_rotate.wav")
 
 var rotation_index: int = 0
@@ -67,6 +68,8 @@ func _on_timer_timeout() -> void:
 	var should_lock := not move(Vector2.DOWN)
 	if should_lock:
 		lock()
+	else:
+		AudioPlayer.play(MOVE_AUTO_SOUND)
 
 
 func move(direction: Vector2) -> bool:
