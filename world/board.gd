@@ -13,6 +13,7 @@ var next_tetromino: Tetromino
 var tetrominos: Array[Tetromino] = []
 
 @onready var panel_container := $"../PanelContainer" as PanelContainer
+@onready var shutter := $"../Shutter" as Shutter
 
 @onready var line_scene := preload("res://line/line.tscn") as PackedScene
 
@@ -34,6 +35,7 @@ func spawn_tetromino(type: Shared.Tetromino, is_next_piece: bool, spawn_position
 	var tetromino := tetromino_scene.instantiate() as Tetromino
 
 	tetromino.data = data
+	tetromino.bounds = shutter.get_window_bounds()
 	tetromino.is_next_piece = is_next_piece
 	tetromino.position = spawn_position
 
@@ -89,14 +91,17 @@ func _add_tetromino_to_lines(tetromino: Tetromino) -> void:
 
 
 func _remove_full_lines() -> void:
+	var bounds := shutter.get_window_bounds()
 	for line in get_lines():
-		if line.is_line_full(Constants.GRID_SIZE.y):
-			_move_lines_down(line.global_position.y)
+		if line.is_line_full(shutter.window_width, bounds):
+			_move_lines_down(line.global_position.y, bounds)
+			# TODO: Lines should only be considered within the current window.
+			# TODO: Remove the notion of lines?
 			line.free()  # Other logic may depend on the line, so it must be removed synchronously.
 			AudioPlayer.play(FULL_LINE_SOUND)
 
 
-func _move_lines_down(y_position: float) -> void:
+func _move_lines_down(y_position: float, _bounds: Rect2) -> void:
 	for line in get_lines():
 		if line.global_position.y < y_position:
 			line.global_position.y += (line.get_children()[0] as Piece).get_size().y

@@ -13,6 +13,7 @@ const ROTATE_SOUND: AudioStream = preload("res://tetromino/sound_rotate.wav")
 var rotation_index: int = 0
 var wall_kicks
 var data: TetrominoData
+var bounds: Rect2 = Rect2(0, 0, 0, 0)
 var is_next_piece: bool
 var pieces: Array[Piece] = []
 var other_tetromino_pieces: Array[Piece] = []
@@ -148,7 +149,7 @@ func calculate_global_position(global_starting_position: Vector2, direction: Vec
 	if is_colliding_with_other_tetrominos(global_starting_position, direction):
 		return Vector2.INF
 
-	if not is_within_game_bounds(global_starting_position, direction):
+	if not is_within_bounds(global_starting_position, direction):
 		return Vector2.INF
 
 	return global_starting_position + direction * pieces[0].get_size()
@@ -162,10 +163,10 @@ func is_colliding_with_other_tetrominos(global_starting_position: Vector2, direc
 	return false
 
 
-func is_within_game_bounds(global_starting_position: Vector2, direction: Vector2) -> bool:
+func is_within_bounds(global_starting_position: Vector2, direction: Vector2) -> bool:
 	for piece in pieces:
 		var new_position = piece.position + global_starting_position + direction * piece.get_size()
-		if new_position.x < Constants.MIN_X || new_position.x > Constants.MAX_X || new_position.y < Constants.MIN_Y || new_position.y > Constants.MAX_Y:
+		if not bounds.has_point(new_position):
 			return false
 	return true
 

@@ -30,6 +30,11 @@ func _on_tetromino_locked(_tetromino: Tetromino) -> void:
 	if is_game_over:
 		return
 
+	# Move the window.
+	board.shutter.move_window()
+	spawn_position = board.shutter.get_spawn_position()
+
+	# Spawn the queued tetromino and enqueue a new one.
 	current_tetromino = next_tetromino
 	next_tetromino = Shared.Tetromino.values().pick_random()
 	board.spawn_tetromino(current_tetromino, false, spawn_position)

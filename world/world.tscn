@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bfc6vtqm6742q"]
+[gd_scene load_steps=8 format=3 uid="uid://bfc6vtqm6742q"]
 
 [ext_resource type="Texture2D" uid="uid://co4kdd63fms7x" path="res://grid/grid_tile.png" id="1_0r0qd"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_nat1m"]
 [ext_resource type="Script" path="res://world/piece_spawner.gd" id="2_ny7kb"]
 [ext_resource type="Script" path="res://world/board.gd" id="3_dlyql"]
 [ext_resource type="PackedScene" uid="uid://dmdkmha3onwjw" path="res://tetromino/tetromino.tscn" id="4_hqnyu"]
+[ext_resource type="Script" path="res://world/shutter.gd" id="5_kj4rs"]
 [ext_resource type="PackedScene" uid="uid://cxho5xmwrdfj2" path="res://ui/ui.tscn" id="5_thcsl"]
 
 [node name="World" type="Node2D"]
@@ -28,6 +29,9 @@ stretch_mode = 1
 [node name="Board" type="Node" parent="."]
 script = ExtResource("3_dlyql")
 tetromino_scene = ExtResource("4_hqnyu")
+
+[node name="Shutter" type="Node" parent="."]
+script = ExtResource("5_kj4rs")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 8
