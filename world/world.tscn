@@ -23,6 +23,7 @@ thickness = 8
 script = ExtResource("1_nat1m")
 
 [node name="GridTexture" type="TextureRect" parent="."]
+z_index = -100
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -123,5 +124,35 @@ text = "[A] - MOVE LEFT
 script = ExtResource("2_ny7kb")
 
 [node name="UI" parent="." instance=ExtResource("5_thcsl")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -270.0
+offset_top = 111.0
+offset_right = -48.0
+offset_bottom = 150.0
+rotation = -1.5708
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.2, 0.235294, 0.341176, 0.2)
+theme_override_fonts/font = ExtResource("7_dgfg5")
+theme_override_font_sizes/font_size = 24
+text = "TETROMINATED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -231.0
+offset_top = 111.0
+offset_right = -9.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.2, 0.235294, 0.341176, 0.2)
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 16
+text = "By Peter Jonsson"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="game_over" from="Board" to="." method="_on_board_game_over"]
