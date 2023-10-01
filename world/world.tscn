@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfc6vtqm6742q"]
+[gd_scene load_steps=10 format=3 uid="uid://bfc6vtqm6742q"]
 
 [ext_resource type="Texture2D" uid="uid://co4kdd63fms7x" path="res://grid/grid_tile.png" id="1_0r0qd"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_nat1m"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dmdkmha3onwjw" path="res://tetromino/tetromino.tscn" id="4_hqnyu"]
 [ext_resource type="Script" path="res://world/shutter.gd" id="5_kj4rs"]
 [ext_resource type="PackedScene" uid="uid://cxho5xmwrdfj2" path="res://ui/ui.tscn" id="5_thcsl"]
+[ext_resource type="FontFile" uid="uid://07t3p58wqny6" path="res://config/kenney_pixel_square.ttf" id="6_dvb0e"]
+[ext_resource type="FontFile" uid="uid://b10ei0ytemn1q" path="res://config/kenney_blocks.ttf" id="7_dgfg5"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_nat1m")
@@ -58,21 +60,25 @@ layout_mode = 2
 
 [node name="ScoreHeading" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 8
 text = "SCORE"
 
 [node name="ScoreLabel" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_dgfg5")
 text = "0"
 horizontal_alignment = 2
 
 [node name="LevelHeading" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 8
 text = "LEVEL"
 
 [node name="LevelLabel" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_dgfg5")
 text = "1"
 horizontal_alignment = 2
 
@@ -89,9 +95,21 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="RightPanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="RightPanelContainer"]
 layout_mode = 2
-text = "NEXT:"
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="NextHeading" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 8
+text = "NEXT"
 
 [node name="PieceSpawner" type="Node" parent="."]
 script = ExtResource("2_ny7kb")

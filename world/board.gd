@@ -51,6 +51,8 @@ func spawn_tetromino(type: Shared.Tetromino, is_next_piece: bool, spawn_position
 		panel_container.add_child(tetromino)
 		tetromino.position = spawn_position
 		next_tetromino = tetromino
+		if data.tetromino_type == Shared.Tetromino.I:
+			tetromino.position.y += (tetromino.pieces[0].get_size().y / 2.0) * tetromino.scale.y
 
 
 func get_lines() -> Array[Line]:

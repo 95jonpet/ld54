@@ -2,6 +2,7 @@ extends Node
 
 
 const SPAWN_SOUND: AudioStream = preload("res://world/spawn.wav")
+const NEXT_INDICATOR_POSITION := Vector2(64, 16)
 
 var current_tetromino: Shared.Tetromino
 var next_tetromino: Shared.Tetromino
@@ -19,7 +20,7 @@ func _ready() -> void:
 	next_tetromino = Shared.Tetromino.values().pick_random()
 	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)
-	board.spawn_tetromino(next_tetromino, true, Vector2(68, 16))
+	board.spawn_tetromino(next_tetromino, true, NEXT_INDICATOR_POSITION)
 	board.tetromino_locked.connect(_on_tetromino_locked)
 	board.game_over.connect(_on_game_over)
 
@@ -42,4 +43,4 @@ func _on_tetromino_locked(_tetromino: Tetromino) -> void:
 	next_tetromino = Shared.Tetromino.values().pick_random()
 	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)
-	board.spawn_tetromino(next_tetromino, true, Vector2(68, 16))
+	board.spawn_tetromino(next_tetromino, true, NEXT_INDICATOR_POSITION)

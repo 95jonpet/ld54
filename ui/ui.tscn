@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxho5xmwrdfj2"]
+[gd_scene load_steps=3 format=3 uid="uid://cxho5xmwrdfj2"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_0fdkb"]
+[ext_resource type="FontFile" uid="uid://07t3p58wqny6" path="res://config/kenney_pixel_square.ttf" id="2_l0wpw"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_0fdkb")
@@ -35,11 +36,13 @@ theme_override_constants/separation = 24
 
 [node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_fonts/font = ExtResource("2_l0wpw")
+theme_override_font_sizes/font_size = 32
 text = "GAME OVER"
 
 [node name="Button" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_l0wpw")
 theme_override_font_sizes/font_size = 24
 text = "RESTART"
 
