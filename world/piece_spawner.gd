@@ -17,6 +17,8 @@ var is_game_over := false
 
 func _ready() -> void:
 	_randomize_queue()
+	while queue.front() == Shared.Tetromino.Explosive:
+		_randomize_queue()
 	current_tetromino = queue.pop_front()
 	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)

@@ -64,7 +64,9 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("move_down"):
 		if move(Vector2.DOWN):
 			AudioPlayer.play(MOVE_SOUND)
-		timer.start()
+			timer.start()
+		else:
+			lock()
 	elif event.is_action_pressed("rotate_left"):
 		rotate_tetromino(-1)
 	elif event.is_action_pressed("rotate_right"):
@@ -234,5 +236,7 @@ func _destroy_touching_pieces() -> void:
 
 func _wait_time_for_level(level: int) -> float:
 	const max_time := 1.0
-	const min_time := 0.25
-	return clampf(max_time - level / 20.0, min_time, max_time)
+	const min_time := 0.125
+	const steps := 25.0
+	const level_diff = (max_time - min_time) / steps
+	return clampf(max_time - (level - 1) * level_diff, min_time, max_time)

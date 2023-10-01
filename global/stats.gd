@@ -26,4 +26,4 @@ func _set_score(value: int) -> void:
 	score = value
 	score_changed.emit(score, old_score)
 
-	_set_level(floori(score / 1000.0) + 1)
+	level = floori(score / 2500.0 + 1)
