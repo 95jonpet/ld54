@@ -1,6 +1,8 @@
 extends Node
 
 
+const SPAWN_SOUND: AudioStream = preload("res://world/spawn.wav")
+
 var current_tetromino: Shared.Tetromino
 var next_tetromino: Shared.Tetromino
 
@@ -15,6 +17,7 @@ var is_game_over := false
 func _ready() -> void:
 	current_tetromino = Shared.Tetromino.values().pick_random()
 	next_tetromino = Shared.Tetromino.values().pick_random()
+	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)
 	board.spawn_tetromino(next_tetromino, true, Vector2(68, 16))
 	board.tetromino_locked.connect(_on_tetromino_locked)
@@ -37,5 +40,6 @@ func _on_tetromino_locked(_tetromino: Tetromino) -> void:
 	# Spawn the queued tetromino and enqueue a new one.
 	current_tetromino = next_tetromino
 	next_tetromino = Shared.Tetromino.values().pick_random()
+	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)
 	board.spawn_tetromino(next_tetromino, true, Vector2(68, 16))

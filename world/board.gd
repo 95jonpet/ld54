@@ -102,6 +102,10 @@ func _remove_full_lines() -> void:
 
 func _move_lines_down(y_position: float) -> void:
 	for line in get_lines():
+		if line.get_child_count() == 0:
+			line.queue_free()
+			continue
+
 		if line.global_position.y < y_position:
 			line.global_position.y += (line.get_children()[0] as Piece).get_size().y
 

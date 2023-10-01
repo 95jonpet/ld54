@@ -5,7 +5,9 @@ extends Node2D
 signal locked()
 
 
+const EXPLODE_SOUND: AudioStream = preload("res://tetromino/sound_explode.wav")
 const HARD_DROP_SOUND: AudioStream = preload("res://tetromino/sound_hard_drop.wav")
+const LOCK_SOUND: AudioStream = preload("res://tetromino/sound_lock.wav")
 const MOVE_SOUND: AudioStream = preload("res://tetromino/sound_move.wav")
 const MOVE_AUTO_SOUND: AudioStream = preload("res://tetromino/sound_move_auto.wav")
 const ROTATE_SOUND: AudioStream = preload("res://tetromino/sound_rotate.wav")
@@ -139,6 +141,15 @@ func hard_drop_ghost() -> Vector2:
 
 
 func lock() -> void:
+	if data.tetromino_type == Shared.Tetromino.Explosive:
+		AudioPlayer.play(EXPLODE_SOUND)
+		_destroy_touching_pieces()
+		for piece in pieces:
+			piece.free()
+		queue_free()
+	else:
+		AudioPlayer.play(LOCK_SOUND)
+
 	timer.stop()
 	locked.emit()
 	ghost_tetromino.queue_free()
@@ -199,3 +210,13 @@ func _get_wall_kick_index(test_rotation_index: int, test_rotation_direction: int
 	if test_rotation_direction < 0:
 		wall_kick_index -= 1
 	return wrapi(wall_kick_index, 0, wall_kicks.size())
+
+
+func _destroy_touching_pieces() -> void:
+	var pieces_to_delete = []
+	for piece in pieces:
+		for other_piece in other_tetromino_pieces.duplicate():
+			if piece.global_position.distance_squared_to(other_piece.global_position) <= Constants.TILE_SIZE * Constants.TILE_SIZE:
+				pieces_to_delete.append(other_piece)
+	for other_piece in pieces_to_delete:
+		other_piece.free()

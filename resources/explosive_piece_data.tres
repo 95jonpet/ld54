@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TetrominoData" load_steps=3 format=3 uid="uid://bc1b47osbeh04"]
+
+[ext_resource type="Texture2D" uid="uid://y2t3ob13nmob" path="res://tetromino/tetromino_white.png" id="1_fe671"]
+[ext_resource type="Script" path="res://global/piece_data.gd" id="2_334jv"]
+
+[resource]
+script = ExtResource("2_334jv")
+piece_texture = ExtResource("1_fe671")
+tetromino_type = 7
+spawn_offset = Vector2(0, 0)

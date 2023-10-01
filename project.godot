@@ -24,6 +24,7 @@ buses/default_bus_layout="res://config/audio_bus_layout.tres"
 Shared="*res://global/shared.gd"
 Constants="*res://global/constants.gd"
 AudioPlayer="*res://global/audio_player.gd"
+MusicPlayer="*res://global/music_player.gd"
 
 [display]
 

@@ -1,7 +1,7 @@
 extends Node
 
 enum Tetromino {
-	I, O, T, J, L, S, Z
+	I, O, T, J, L, S, Z, Explosive
 }
 
 var cells = {
@@ -12,6 +12,7 @@ var cells = {
 	Tetromino.S: [Vector2i(0, 1), Vector2i(1, 1), Vector2i(-1, 0), Vector2i(0, 0)],
 	Tetromino.T: [Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, 0), Vector2i(1, 0)],
 	Tetromino.Z: [Vector2i(-1, 1), Vector2i(0, 1), Vector2i(0, 0), Vector2i(1, 0)],
+	Tetromino.Explosive: [Vector2i(0, 1), Vector2i(1, 1), Vector2i(0, 0), Vector2i(1, 0)],
 }
 
 var wall_kicks_i = [
@@ -44,6 +45,7 @@ var data = {
 	Tetromino.S: preload("res://resources/s_piece_data.tres"),
 	Tetromino.T: preload("res://resources/t_piece_data.tres"),
 	Tetromino.Z: preload("res://resources/z_piece_data.tres"),
+	Tetromino.Explosive: preload("res://resources/explosive_piece_data.tres"),
 }
 
 var clockwise_rotation_matrix = [Vector2i(0, -1), Vector2i(1, 0)]
