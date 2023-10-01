@@ -33,10 +33,11 @@ func _on_tetromino_locked(tetromino: Tetromino) -> void:
 	tetromino.queue_free()
 
 
-func spawn_tetromino(type: Shared.Tetromino, is_next_piece: bool, spawn_position: Vector2) -> void:
-	var data := Shared.data[type] as TetrominoData
+func spawn_tetromino(type: Shared.Tetromino, is_next_piece: bool, spawn_position: Vector2, explosive: bool) -> void:
+	var data := Shared.data[type].duplicate() as TetrominoData
 	var tetromino := tetromino_scene.instantiate() as Tetromino
 
+	data.explosive = explosive
 	tetromino.data = data
 	tetromino.bounds = shutter.get_window_bounds()
 	tetromino.is_next_piece = is_next_piece

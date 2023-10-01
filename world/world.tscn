@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfc6vtqm6742q"]
+[gd_scene load_steps=10 format=3 uid="uid://cka31ep74kg1w"]
 
-[ext_resource type="Texture2D" uid="uid://co4kdd63fms7x" path="res://grid/grid_tile.png" id="1_0r0qd"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_nat1m"]
+[ext_resource type="Texture2D" uid="uid://co4kdd63fms7x" path="res://world/board_tile.png" id="2_ier6u"]
 [ext_resource type="Script" path="res://world/piece_spawner.gd" id="2_ny7kb"]
 [ext_resource type="Script" path="res://world/board.gd" id="3_dlyql"]
 [ext_resource type="PackedScene" uid="uid://dmdkmha3onwjw" path="res://tetromino/tetromino.tscn" id="4_hqnyu"]
@@ -25,7 +25,7 @@ offset_right = 160.0
 offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_0r0qd")
+texture = ExtResource("2_ier6u")
 stretch_mode = 1
 
 [node name="Board" type="Node" parent="."]

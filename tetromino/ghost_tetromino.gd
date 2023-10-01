@@ -12,7 +12,7 @@ func _ready() -> void:
 		var piece := piece_scene.instantiate() as Piece
 		add_child(piece)
 		piece.set_texture(ghost_texture)
-		piece.set_particles(data.tetromino_type == Shared.Tetromino.Explosive)
+		piece.set_particles(data.explosive)
 		piece.position = Vector2(cell) * piece.get_size()
 
 

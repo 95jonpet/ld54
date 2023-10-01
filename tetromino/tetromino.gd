@@ -5,6 +5,8 @@ extends Node2D
 signal locked()
 
 
+const EXPLOSIVE_PIECE_TEXTURE: Texture2D = preload("res://tetromino/tetromino_white.png")
+
 const EXPLODE_SOUND: AudioStream = preload("res://tetromino/sound_explode.wav")
 const HARD_DROP_SOUND: AudioStream = preload("res://tetromino/sound_hard_drop.wav")
 const LOCK_SOUND: AudioStream = preload("res://tetromino/sound_lock.wav")
@@ -34,8 +36,8 @@ func _ready() -> void:
 		var piece := piece_scene.instantiate() as Piece
 		pieces.append(piece)
 		add_child(piece)
-		piece.set_texture(data.piece_texture)
-		piece.set_particles(data.tetromino_type == Shared.Tetromino.Explosive)
+		piece.set_texture(EXPLOSIVE_PIECE_TEXTURE if data.explosive else data.piece_texture)
+		piece.set_particles(data.explosive)
 		piece.position = Vector2(cell) * piece.get_size()
 
 	timer.wait_time = _wait_time_for_level(Stats.level)
@@ -147,7 +149,7 @@ func hard_drop_ghost() -> Vector2:
 
 
 func lock() -> void:
-	if data.tetromino_type == Shared.Tetromino.Explosive:
+	if data.explosive:
 		ScreenShake.apply_shake(8.0)
 		AudioPlayer.play(EXPLODE_SOUND)
 		_destroy_touching_pieces()
