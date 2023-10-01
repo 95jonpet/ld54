@@ -26,6 +26,7 @@ Constants="*res://global/constants.gd"
 AudioPlayer="*res://global/audio_player.gd"
 Stats="*res://global/stats.gd"
 MusicPlayer="*res://global/music_player.gd"
+ScreenShake="*res://global/screen_shake.gd"
 
 [display]
 

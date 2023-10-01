@@ -38,6 +38,7 @@ func _ready() -> void:
 		piece.position = Vector2(cell) * piece.get_size()
 
 	timer.wait_time = _wait_time_for_level(Stats.level)
+	timer.start()
 
 	if not is_next_piece:
 		wall_kicks = Shared.wall_kicks_i if data.tetromino_type == Shared.Tetromino.I else Shared.wall_kicks_jlostz
@@ -144,6 +145,7 @@ func hard_drop_ghost() -> Vector2:
 
 func lock() -> void:
 	if data.tetromino_type == Shared.Tetromino.Explosive:
+		ScreenShake.apply_shake(8.0)
 		AudioPlayer.play(EXPLODE_SOUND)
 		_destroy_touching_pieces()
 		for piece in pieces:
@@ -222,6 +224,8 @@ func _destroy_touching_pieces() -> void:
 			if piece.global_position.distance_squared_to(other_piece.global_position) <= Constants.TILE_SIZE * Constants.TILE_SIZE:
 				pieces_to_delete.append(other_piece)
 	for other_piece in pieces_to_delete:
+		if not is_instance_valid(other_piece):
+			continue
 		other_piece.free()
 
 	Stats.score += pieces_to_delete.size() * 10

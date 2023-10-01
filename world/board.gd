@@ -25,6 +25,7 @@ func _on_tetromino_locked(tetromino: Tetromino) -> void:
 	_remove_full_lines()
 
 	if _check_game_over():
+		ScreenShake.apply_shake(24.0)
 		game_over.emit()
 	else:
 		tetromino_locked.emit(tetromino)
