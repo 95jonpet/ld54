@@ -35,6 +35,7 @@ func _ready() -> void:
 		pieces.append(piece)
 		add_child(piece)
 		piece.set_texture(data.piece_texture)
+		piece.set_particles(data.tetromino_type == Shared.Tetromino.Explosive)
 		piece.position = Vector2(cell) * piece.get_size()
 
 	timer.wait_time = _wait_time_for_level(Stats.level)
