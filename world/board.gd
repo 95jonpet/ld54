@@ -29,6 +29,8 @@ func _on_tetromino_locked(tetromino: Tetromino) -> void:
 	else:
 		tetromino_locked.emit(tetromino)
 
+	tetromino.queue_free()
+
 
 func spawn_tetromino(type: Shared.Tetromino, is_next_piece: bool, spawn_position: Vector2) -> void:
 	var data := Shared.data[type] as TetrominoData
@@ -91,17 +93,14 @@ func _add_tetromino_to_lines(tetromino: Tetromino) -> void:
 
 
 func _remove_full_lines() -> void:
-	var bounds := shutter.get_window_bounds()
 	for line in get_lines():
-		if line.is_line_full(shutter.window_width, bounds):
-			_move_lines_down(line.global_position.y, bounds)
-			# TODO: Lines should only be considered within the current window.
-			# TODO: Remove the notion of lines?
+		if line.is_full(Constants.GRID_SIZE.x):
+			_move_lines_down(line.global_position.y)
 			line.free()  # Other logic may depend on the line, so it must be removed synchronously.
 			AudioPlayer.play(FULL_LINE_SOUND)
 
 
-func _move_lines_down(y_position: float, _bounds: Rect2) -> void:
+func _move_lines_down(y_position: float) -> void:
 	for line in get_lines():
 		if line.global_position.y < y_position:
 			line.global_position.y += (line.get_children()[0] as Piece).get_size().y
