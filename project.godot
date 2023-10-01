@@ -10,10 +10,13 @@ config_version=5
 
 [application]
 
-config/name="ld54"
+config/name="Tetrominated"
+config/description="Made in 48 hours by Peter Jonsson for Ludum Dare 54."
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="res://config/icon.png"
+config/windows_native_icon="res://config/icon.ico"
 
 [audio]
 
