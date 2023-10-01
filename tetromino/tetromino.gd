@@ -37,6 +37,8 @@ func _ready() -> void:
 		piece.set_texture(data.piece_texture)
 		piece.position = Vector2(cell) * piece.get_size()
 
+	timer.wait_time = _wait_time_for_level(Stats.level)
+
 	if not is_next_piece:
 		wall_kicks = Shared.wall_kicks_i if data.tetromino_type == Shared.Tetromino.I else Shared.wall_kicks_jlostz
 		ghost_tetromino = ghost_tetromino_scene.instantiate() as GhostTetromino
@@ -154,6 +156,7 @@ func lock() -> void:
 	locked.emit()
 	ghost_tetromino.queue_free()
 	set_process_input(false)
+	Stats.score += 1
 
 
 func calculate_global_position(global_starting_position: Vector2, direction: Vector2) -> Vector2:
@@ -220,3 +223,11 @@ func _destroy_touching_pieces() -> void:
 				pieces_to_delete.append(other_piece)
 	for other_piece in pieces_to_delete:
 		other_piece.free()
+
+	Stats.score += pieces_to_delete.size() * 10
+
+
+func _wait_time_for_level(level: int) -> float:
+	const max_time := 1.0
+	const min_time := 0.25
+	return clampf(max_time - level / 20.0, min_time, max_time)

@@ -12,7 +12,7 @@ const FULL_LINE_SOUND: AudioStream = preload("res://tetromino/sound_full_line.wa
 var next_tetromino: Tetromino
 var tetrominos: Array[Tetromino] = []
 
-@onready var panel_container := $"../PanelContainer" as PanelContainer
+@onready var panel_container := $"../RightPanelContainer" as PanelContainer
 @onready var shutter := $"../Shutter" as Shutter
 
 @onready var line_scene := preload("res://line/line.tscn") as PackedScene
@@ -93,11 +93,23 @@ func _add_tetromino_to_lines(tetromino: Tetromino) -> void:
 
 
 func _remove_full_lines() -> void:
+	var removed_lines := 0
 	for line in get_lines():
 		if line.is_full(Constants.GRID_SIZE.x):
 			_move_lines_down(line.global_position.y)
 			line.free()  # Other logic may depend on the line, so it must be removed synchronously.
 			AudioPlayer.play(FULL_LINE_SOUND)
+			removed_lines += 1
+
+	match removed_lines:
+		1:
+			Stats.score += 800 * Stats.level
+		2:
+			Stats.score += 1200 * Stats.level
+		3:
+			Stats.score += 1800 * Stats.level
+		4:
+			Stats.score += 2000 * Stats.level
 
 
 func _move_lines_down(y_position: float) -> void:
