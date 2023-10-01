@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cka31ep74kg1w"]
+[gd_scene load_steps=12 format=3 uid="uid://cka31ep74kg1w"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_nat1m"]
 [ext_resource type="Texture2D" uid="uid://co4kdd63fms7x" path="res://world/board_tile.png" id="2_ier6u"]
@@ -9,6 +9,15 @@
 [ext_resource type="PackedScene" uid="uid://cxho5xmwrdfj2" path="res://ui/ui.tscn" id="5_thcsl"]
 [ext_resource type="FontFile" uid="uid://07t3p58wqny6" path="res://config/kenney_pixel_square.ttf" id="6_dvb0e"]
 [ext_resource type="FontFile" uid="uid://b10ei0ytemn1q" path="res://config/kenney_blocks.ttf" id="7_dgfg5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa1so"]
+bg_color = Color(0.2, 0.235294, 0.341176, 0.2)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_gyqwh"]
+color = Color(0.101961, 0.109804, 0.172549, 1)
+grow_begin = 9.0
+grow_end = 9.0
+thickness = 8
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_nat1m")
@@ -35,72 +44,26 @@ tetromino_scene = ExtResource("4_hqnyu")
 [node name="Shutter" type="Node" parent="."]
 script = ExtResource("5_kj4rs")
 
-[node name="LeftPanelContainer" type="PanelContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -284.0
-offset_top = -20.0
-offset_right = -192.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="LeftPanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LeftPanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="ScoreHeading" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("6_dvb0e")
-theme_override_font_sizes/font_size = 8
-text = "SCORE"
-
-[node name="ScoreLabel" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_dgfg5")
-text = "0"
-horizontal_alignment = 2
-
-[node name="LevelHeading" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("6_dvb0e")
-theme_override_font_sizes/font_size = 8
-text = "LEVEL"
-
-[node name="LevelLabel" type="Label" parent="LeftPanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_dgfg5")
-text = "1"
-horizontal_alignment = 2
-
 [node name="RightPanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 192.0
-offset_top = -20.0
-offset_right = 284.0
-offset_bottom = 20.0
+offset_left = 190.0
+offset_top = -155.0
+offset_right = 302.0
+offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xa1so")
 
 [node name="MarginContainer" type="MarginContainer" parent="RightPanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RightPanelContainer/MarginContainer"]
 layout_mode = 2
@@ -110,6 +73,51 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("6_dvb0e")
 theme_override_font_sizes/font_size = 8
 text = "NEXT"
+
+[node name="NextPlaceholderSpace" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreHeading" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 8
+text = "SCORE"
+
+[node name="ScoreLabel" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_dgfg5")
+text = "0"
+horizontal_alignment = 2
+
+[node name="LevelHeading" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 8
+text = "LEVEL"
+
+[node name="LevelLabel" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_dgfg5")
+text = "1"
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxLine_gyqwh")
+
+[node name="Label" type="Label" parent="RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_dvb0e")
+theme_override_font_sizes/font_size = 8
+text = "[A] - MOVE LEFT
+[D] - MOVE RIGHT
+[S] - MOVE DOWN
+
+[Q] - ROTATE CCW
+[E] - ROTATE CW
+
+[SPACE] - DROP"
 
 [node name="PieceSpawner" type="Node" parent="."]
 script = ExtResource("2_ny7kb")

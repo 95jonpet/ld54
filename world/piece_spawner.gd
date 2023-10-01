@@ -2,7 +2,7 @@ extends Node
 
 
 const SPAWN_SOUND: AudioStream = preload("res://world/spawn.wav")
-const NEXT_INDICATOR_POSITION := Vector2(64, 16)
+const NEXT_INDICATOR_POSITION := Vector2(72, 32)
 
 var current_tetromino: Shared.Tetromino
 var queue: Array[Shared.Tetromino] = []

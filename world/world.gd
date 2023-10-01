@@ -5,8 +5,8 @@ extends Node2D
 const GAME_OVER_SOUND: AudioStream = preload("res://world/game_over.wav")
 
 @onready var grid_texture := $GridTexture as TextureRect
-@onready var score_label := $LeftPanelContainer/MarginContainer/VBoxContainer/ScoreLabel as Label
-@onready var level_label := $LeftPanelContainer/MarginContainer/VBoxContainer/LevelLabel as Label
+@onready var score_label := $RightPanelContainer/MarginContainer/VBoxContainer/ScoreLabel as Label
+@onready var level_label := $RightPanelContainer/MarginContainer/VBoxContainer/LevelLabel as Label
 
 
 func _ready() -> void:
