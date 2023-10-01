@@ -5,7 +5,7 @@ const SPAWN_SOUND: AudioStream = preload("res://world/spawn.wav")
 const NEXT_INDICATOR_POSITION := Vector2(64, 16)
 
 var current_tetromino: Shared.Tetromino
-var next_tetromino: Shared.Tetromino
+var queue: Array[Shared.Tetromino] = []
 
 var spawn_position := Vector2(-Constants.TILE_SIZE / 2.0, Constants.MIN_Y)
 
@@ -17,10 +17,10 @@ var is_game_over := false
 
 func _ready() -> void:
 	current_tetromino = Shared.Tetromino.values().pick_random()
-	next_tetromino = Shared.Tetromino.values().pick_random()
+	_randomize_queue()
 	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)
-	board.spawn_tetromino(next_tetromino, true, NEXT_INDICATOR_POSITION)
+	board.spawn_tetromino(queue.front(), true, NEXT_INDICATOR_POSITION)
 	board.tetromino_locked.connect(_on_tetromino_locked)
 	board.game_over.connect(_on_game_over)
 
@@ -39,8 +39,15 @@ func _on_tetromino_locked(_tetromino: Tetromino) -> void:
 	spawn_position = board.shutter.get_spawn_position()
 
 	# Spawn the queued tetromino and enqueue a new one.
-	current_tetromino = next_tetromino
-	next_tetromino = Shared.Tetromino.values().pick_random()
+	current_tetromino = queue.pop_front()
+	if queue.is_empty():
+		_randomize_queue()
 	AudioPlayer.play(SPAWN_SOUND)
 	board.spawn_tetromino(current_tetromino, false, spawn_position)
-	board.spawn_tetromino(next_tetromino, true, NEXT_INDICATOR_POSITION)
+	board.spawn_tetromino(queue.front(), true, NEXT_INDICATOR_POSITION)
+
+
+func _randomize_queue() -> void:
+	for type in Shared.Tetromino.values().duplicate():
+		queue.push_back(type as Shared.Tetromino)
+	queue.shuffle()
